@@ -15,20 +15,20 @@ class Mystate(TypedDict):
 def node_1(state:Mystate) -> dict:
     song_picker_temp= song_picker.format(sentence = state['sentence'])
     response = llm.invoke(song_picker_temp)
-    state['mood']=response
-    return {}
+    #state['mood']=response
+    return {"mood":response.content}
 
 def node_2(state:Mystate) -> dict:
     genre_decide_temp= genre_decide.format(mood=state['mood'],sentence=state['sentence'])
     response = llm.invoke(genre_decide_temp)
-    state['genre'] = response.content
-    return {}
+    #state['genre'] = response.content
+    return {"genre":response.content}
 
 def node_3(state:Mystate) -> dict:
     song_recommend_t = song_recommend.format(genre = state['genre'],mood = state['mood'])
     final_out = llm.invoke(song_recommend_t)
-    state['song']= final_out.content
-    return {}
+    #state['song']= final_out.content
+    return {"song":final_out.content}
 
 
 
